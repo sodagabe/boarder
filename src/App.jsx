@@ -1,7 +1,13 @@
+import NavBarContainer from "./components/NavBarContainer";
+import ProductListContainer from "./components/ProductListContainer";
+import Footer from "./components/Footer";
+
 function App() {
   return (
     <>
-      <h1>Hello world!</h1>
+      <NavBarContainer></NavBarContainer>
+      <ProductListContainer></ProductListContainer>
+      <Footer></Footer>
     </>
   );
 }
