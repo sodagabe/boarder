@@ -5,6 +5,7 @@ function App() {
   return (
     <>
       <NavBarContainer></NavBarContainer>
+      <ProductListContainer></ProductListContainer>
     </>
   );
 }
