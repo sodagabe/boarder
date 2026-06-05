@@ -1,13 +1,12 @@
-import NavBarContainer from "./components/NavBarContainer";
+import BasicLayout from "./components/layouts/BasicLayout";
 import ProductListContainer from "./components/ProductListContainer";
-import Footer from "./components/Footer";
 
 function App() {
   return (
     <>
-      <NavBarContainer></NavBarContainer>
-      <ProductListContainer></ProductListContainer>
-      <Footer></Footer>
+      <BasicLayout>
+        <ProductListContainer />
+      </BasicLayout>
     </>
   );
 }
