@@ -1,30 +1,41 @@
+import { useEffect, useState } from "react";
 import Product from "./Product";
 import ProductList from "./ProductList";
 
 function ProductListContainer() {
-  const products = [
-    {
-      id: 1,
-      title: "PBT keycaps set",
-      description: "A complete set of PBT keycaps for QWERTY layout.",
-    },
-    {
-      id: 2,
-      title: "ABS keycaps set",
-      description: "A complete set of ABS keycaps for QWERTY layout.",
-    },
-  ];
+  const [products, setProducts] = useState([]);
+  useEffect(() => {
+    async function fetchProducts(uri) {
+      const response = await fetch(`https://fakestoreapi.com/${uri}`);
+      const products = await response.json();
+      if (!retrieved) {
+        setProducts(products);
+      }
+      return products;
+    }
+    let retrieved = false;
+    fetchProducts("/products");
+    return () => {
+      console.log(products);
+
+      retrieved = true;
+    };
+  }, []);
   const buildProduct = (product) => {
     return (
       <Product
         key={product.id}
+        thumbnailURL={product.image}
         title={product.title}
         description={product.description}
+        price={product.price}
       ></Product>
     );
   };
-  return (
+  return products.length ? (
     <ProductList products={products} mapFunction={buildProduct}></ProductList>
+  ) : (
+    <p>Loading...</p>
   );
 }
 
