@@ -33,7 +33,7 @@ function ProductListContainer() {
     );
   };
   return products.length ? (
-    <ProductList products={products} mapFunction={buildProduct}></ProductList>
+    <ProductList products={products} mapFunction={buildProduct} />
   ) : (
     <p>Loading...</p>
   );
