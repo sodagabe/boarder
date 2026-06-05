@@ -1,11 +1,12 @@
+import { Outlet } from "react-router";
 import Footer from "../Footer";
 import NavBarContainer from "../NavBarContainer";
 
-function BasicLayout({ children }) {
+function BasicLayout() {
   return (
     <>
       <NavBarContainer />
-      {children}
+      <Outlet />
       <Footer />
     </>
   );
