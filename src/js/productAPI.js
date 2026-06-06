@@ -1,5 +1,6 @@
 import DummyAPI from "./dummyAPI";
 import Product from "./entities/product";
+import Category from "./entities/category";
 
 class ProductAPI {
   static #productFromDummy(dummyProduct) {
@@ -13,22 +14,45 @@ class ProductAPI {
     });
   }
 
-  static async getProducts() {
-    const productsExternal = await DummyAPI.getProducts();
-    const products = [];
-    productsExternal.forEach((productExternal) => {
-      const product = this.#productFromDummy(productExternal);
-      products.push(product);
+  static #categoryFromDummy(dummyCategory) {
+    return new Category({
+      id: dummyCategory.slug,
+      name: dummyCategory.name,
     });
+  }
+
+  static async #getItems(fetch, transform) {
+    const itemsFromService = await fetch();
+    const items = [];
+    itemsFromService.forEach((itemFromService) => {
+      const item = transform(itemFromService);
+      items.push(item);
+    });
+    return items;
+  }
+
+  static async getProducts() {
+    const products = this.#getItems(
+      () => {
+        return DummyAPI.getProducts();
+      },
+      (productFromService) => {
+        return this.#productFromDummy(productFromService);
+      },
+    );
     return products;
   }
 
-  static getCategoriesFromProducts(products) {
-    const categories = new Set();
-    products.reduce((current) => {
-      categories.add(current.categoryID);
-    });
-    return categories.values();
+  static getCategories() {
+    const categories = this.#getItems(
+      () => {
+        DummyAPI.getCategories;
+      },
+      (categoryFromService) => {
+        this.#categoryFromDummy(categoryFromService);
+      },
+    );
+    return categories;
   }
 }
 
