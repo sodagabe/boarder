@@ -52,7 +52,7 @@ class FakeStoreAPI {
 
   static async getProducts() {
     const url = this.buildURL(this.#productsURI);
-    const productsData = await makeRequest(url);
+    const productsData = await makeRequest({ url: url });
     const products = [];
     productsData.forEach((productData) => {
       const product = new FakeStoreProduct({ ...productData });
