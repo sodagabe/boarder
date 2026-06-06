@@ -1,20 +1,22 @@
 import makeRequest from "./utils/requests";
 
-class FakeStoreProduct {
+class DummyProduct {
   #id;
   #title;
   #price;
   #description;
   #category;
-  #image;
+  #thumbnail;
+  #stock;
 
-  constructor({ id, title, price, description, category, image }) {
+  constructor({ id, title, price, description, category, thumbnail, stock }) {
     this.#id = id;
     this.#title = title;
     this.#price = price;
     this.#description = description;
     this.#category = category;
-    this.#image = image;
+    this.#thumbnail = thumbnail;
+    this.#stock = stock;
   }
 
   get id() {
@@ -37,29 +39,33 @@ class FakeStoreProduct {
     return this.#category;
   }
 
-  get image() {
-    return this.#image;
+  get thumbnail() {
+    return this.#thumbnail;
+  }
+
+  get stock() {
+    return this.#stock;
   }
 }
 
-class FakeStoreAPI {
-  static #baseURL = "https://fakestoreapi.com";
-  static #productsURI = "/products";
+class DummyAPI {
+  static #baseURL = "https://dummyjson.com/products";
 
   static buildURL(uri) {
     return `${this.#baseURL}${uri}`;
   }
 
   static async getProducts() {
-    const url = this.buildURL(this.#productsURI);
+    const url = this.#baseURL;
     const productsData = await makeRequest({ url: url });
+    const productsDataPage = productsData.products;
     const products = [];
-    productsData.forEach((productData) => {
-      const product = new FakeStoreProduct({ ...productData });
+    productsDataPage.forEach((productData) => {
+      const product = new DummyProduct({ ...productData });
       products.push(product);
     });
     return products;
   }
 }
 
-export default FakeStoreAPI;
+export default DummyAPI;
