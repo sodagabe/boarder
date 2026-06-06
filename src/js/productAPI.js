@@ -33,24 +33,16 @@ class ProductAPI {
 
   static async getProducts() {
     const products = this.#getItems(
-      () => {
-        return DummyAPI.getProducts();
-      },
-      (productFromService) => {
-        return this.#productFromDummy(productFromService);
-      },
+      () => DummyAPI.getProducts(),
+      (productFromService) => this.#productFromDummy(productFromService),
     );
     return products;
   }
 
   static getCategories() {
     const categories = this.#getItems(
-      () => {
-        DummyAPI.getCategories;
-      },
-      (categoryFromService) => {
-        this.#categoryFromDummy(categoryFromService);
-      },
+      () => DummyAPI.getCategories,
+      (categoryFromService) => this.#categoryFromDummy(categoryFromService),
     );
     return categories;
   }
