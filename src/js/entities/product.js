@@ -2,15 +2,15 @@ class Product {
   #id;
   #title;
   #description;
-  #thumbnail;
+  #thumbnailURL;
   #price;
   #categoryID;
 
-  constructor({ id, title, description, thumbnail, price, categoryID }) {
+  constructor({ id, title, description, thumbnailURL, price, categoryID }) {
     this.#id = id;
     this.#title = title;
     this.#description = description;
-    this.#thumbnail = thumbnail;
+    this.#thumbnailURL = thumbnailURL;
     this.#price = price;
     this.#categoryID = categoryID;
   }
@@ -27,8 +27,8 @@ class Product {
     return this.#description;
   }
 
-  get thumbnail() {
-    return this.#thumbnail;
+  get thumbnailURL() {
+    return this.#thumbnailURL;
   }
 
   get price() {
