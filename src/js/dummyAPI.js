@@ -48,8 +48,33 @@ class DummyProduct {
   }
 }
 
+class DummyCategory {
+  #slug;
+  #name;
+  #url;
+
+  constructor({ slug, name, url }) {
+    this.#slug = slug;
+    this.#name = name;
+    this.#url = url;
+  }
+
+  get slug() {
+    return this.#slug;
+  }
+
+  get name() {
+    return this.#name;
+  }
+
+  get url() {
+    return this.#url;
+  }
+}
+
 class DummyAPI {
   static #baseURL = "https://dummyjson.com/products";
+  static #categoriesURI = "/categories";
 
   static buildURL(uri) {
     return `${this.#baseURL}${uri}`;
@@ -65,6 +90,16 @@ class DummyAPI {
       products.push(product);
     });
     return products;
+  }
+
+  static async getCategories() {
+    const url = this.buildURL(this.#categoriesURI);
+    const categoriesData = await makeRequest({ url: url });
+    const categories = [];
+    categoriesData.forEach((categoryData) => {
+      const category = new DummyCategory({ categoryData });
+      categories.push(category);
+    });
   }
 }
 
