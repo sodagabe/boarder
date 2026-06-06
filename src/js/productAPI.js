@@ -41,7 +41,7 @@ class ProductAPI {
 
   static getCategories() {
     const categories = this.#getItems(
-      () => DummyAPI.getCategories,
+      () => DummyAPI.getCategories(),
       (categoryFromService) => this.#categoryFromDummy(categoryFromService),
     );
     return categories;
