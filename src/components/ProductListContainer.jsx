@@ -1,9 +1,7 @@
 import Product from "./Product";
 import ProductList from "./ProductList";
-import useProductData from "../hooks/useProductData";
 
-function ProductListContainer() {
-  const products = useProductData();
+function ProductListContainer({ products }) {
   const buildProduct = (product) => {
     return <Product key={product.id} product={product} />;
   };
