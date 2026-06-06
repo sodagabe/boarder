@@ -1,4 +1,4 @@
-import makeRequest from "./utils";
+import makeRequest from "./utils/requests";
 
 class FakeStoreProduct {
   #id;
