@@ -5,7 +5,7 @@ import useProductData from "../hooks/useProductData";
 function ProductListContainer() {
   const products = useProductData();
   const buildProduct = (product) => {
-    return <Product key={product.id} product={product}></Product>;
+    return <Product key={product.id} product={product} />;
   };
   return products.length ? (
     <ProductList products={products} mapFunction={buildProduct} />
