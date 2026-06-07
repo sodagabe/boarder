@@ -97,9 +97,10 @@ class DummyAPI {
     const categoriesData = await makeRequest({ url: url });
     const categories = [];
     categoriesData.forEach((categoryData) => {
-      const category = new DummyCategory({ categoryData });
+      const category = new DummyCategory({ ...categoryData });
       categories.push(category);
     });
+    return categories;
   }
 }
 

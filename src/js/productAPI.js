@@ -3,6 +3,11 @@ import Product from "./entities/product";
 import Category from "./entities/category";
 
 class ProductAPI {
+  static Services = Object.freeze({
+    PRODUCTS: Symbol("products"),
+    CATEGORIES: Symbol("categories"),
+  });
+
   static #productFromDummy(dummyProduct) {
     return new Product({
       id: dummyProduct.id,
@@ -31,16 +36,29 @@ class ProductAPI {
     return items;
   }
 
+  static getService(serviceEnumValue) {
+    let service = null;
+    switch (serviceEnumValue) {
+      case this.Services.PRODUCTS:
+        service = () => this.getProducts();
+        break;
+      case this.Services.CATEGORIES:
+        service = () => this.getCategories();
+        break;
+    }
+    return service;
+  }
+
   static async getProducts() {
-    const products = this.#getItems(
+    const products = await this.#getItems(
       () => DummyAPI.getProducts(),
       (productFromService) => this.#productFromDummy(productFromService),
     );
     return products;
   }
 
-  static getCategories() {
-    const categories = this.#getItems(
+  static async getCategories() {
+    const categories = await this.#getItems(
       () => DummyAPI.getCategories(),
       (categoryFromService) => this.#categoryFromDummy(categoryFromService),
     );
