@@ -2,9 +2,9 @@ import { NavLink } from "react-router";
 
 function Category({ category }) {
   return (
-    <div>
-      <NavLink>{category.name}</NavLink>
-    </div>
+    <NavLink to={`/category/${category.id}`} className="p-2">
+      {category.name}
+    </NavLink>
   );
 }
 

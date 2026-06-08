@@ -7,6 +7,10 @@ function App() {
     <Routes>
       <Route element={<BasicLayout />}>
         <Route index element={<ProductsSectionContainer />} />
+        <Route
+          path="/category/:categoryID"
+          element={<ProductsSectionContainer />}
+        />
       </Route>
     </Routes>
   );
