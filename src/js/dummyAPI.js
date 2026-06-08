@@ -75,25 +75,33 @@ class DummyCategory {
 class DummyAPI {
   static #baseURL = "https://dummyjson.com/products";
   static #categoriesURI = "/categories";
+  static #productsByCategoryURI = "/category";
 
   static buildURL(uri) {
     return `${this.#baseURL}${uri}`;
   }
 
-  static async getProducts() {
-    const url = this.#baseURL;
-    const productsData = await makeRequest({ url: url });
-    const productsDataPage = productsData.products;
+  static #buildProducts(productsPage) {
     const products = [];
-    productsDataPage.forEach((productData) => {
+    productsPage.forEach((productData) => {
       const product = new DummyProduct({ ...productData });
       products.push(product);
     });
     return products;
   }
 
+  static async getProducts(categoryID) {
+    let url = categoryID
+      ? this.buildURL(`${this.#productsByCategoryURI}/${categoryID}`)
+      : this.#baseURL;
+    const productsData = await makeRequest({ url: url });
+    const productsDataPage = productsData.products;
+    const products = this.#buildProducts(productsDataPage);
+    return products;
+  }
+
   static async getCategories() {
-    const url = this.buildURL(this.#categoriesURI);
+    let url = this.buildURL(this.#categoriesURI);
     const categoriesData = await makeRequest({ url: url });
     const categories = [];
     categoriesData.forEach((categoryData) => {

@@ -36,11 +36,11 @@ class ProductAPI {
     return items;
   }
 
-  static getService(serviceEnumValue) {
+  static getService(serviceType, params) {
     let service = null;
-    switch (serviceEnumValue) {
+    switch (serviceType) {
       case this.Services.PRODUCTS:
-        service = () => this.getProducts();
+        service = () => this.getProducts(params);
         break;
       case this.Services.CATEGORIES:
         service = () => this.getCategories();
@@ -49,9 +49,9 @@ class ProductAPI {
     return service;
   }
 
-  static async getProducts() {
+  static async getProducts(categoryID) {
     const products = await this.#getItems(
-      () => DummyAPI.getProducts(),
+      () => DummyAPI.getProducts(categoryID),
       (productFromService) => this.#productFromDummy(productFromService),
     );
     return products;

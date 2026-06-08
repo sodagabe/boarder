@@ -3,7 +3,7 @@ import ProductList from "./ProductList";
 import useProductData from "../hooks/useProductData";
 
 function ProductListContainer({ categoryID }) {
-  const products = useProductData();
+  const products = useProductData(categoryID);
   const buildProduct = (product) => {
     return <Product key={product.id} product={product} />;
   };

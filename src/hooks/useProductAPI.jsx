@@ -1,11 +1,12 @@
 import { useState, useEffect } from "react";
 import ProductAPI from "../js/productAPI";
 
-function useProductAPI(serviceType) {
+function useProductAPI({ serviceType, params = {} }) {
   const [items, setItems] = useState([]);
+  const { categoryID } = params;
   useEffect(() => {
     let finishedFetching = false;
-    const service = ProductAPI.getService(serviceType);
+    const service = ProductAPI.getService(serviceType, categoryID);
     async function startFetching() {
       const items = await service();
       if (!finishedFetching) {
@@ -16,7 +17,7 @@ function useProductAPI(serviceType) {
     return () => {
       finishedFetching = true;
     };
-  }, [serviceType]);
+  }, [serviceType, categoryID]);
   return items;
 }
 

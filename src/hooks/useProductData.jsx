@@ -1,8 +1,11 @@
 import ProductAPI from "../js/productAPI";
 import useProductAPI from "./useProductAPI";
 
-function useProductData() {
-  const products = useProductAPI(ProductAPI.Services.PRODUCTS);
+function useProductData(categoryID) {
+  const products = useProductAPI({
+    serviceType: ProductAPI.Services.PRODUCTS,
+    params: { categoryID: categoryID },
+  });
   return products;
 }
 
