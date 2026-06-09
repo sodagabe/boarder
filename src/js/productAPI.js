@@ -36,11 +36,11 @@ class ProductAPI {
     return items;
   }
 
-  static getService(serviceType, params) {
+  static getService(serviceType) {
     let service = null;
     switch (serviceType) {
       case this.Services.PRODUCTS:
-        service = () => this.getProducts(params);
+        service = (params) => this.getProducts(params);
         break;
       case this.Services.CATEGORIES:
         service = () => this.getCategories();
@@ -49,7 +49,7 @@ class ProductAPI {
     return service;
   }
 
-  static async getProducts(categoryID) {
+  static async getProducts({ categoryID }) {
     const products = await this.#getItems(
       () => DummyAPI.getProducts(categoryID),
       (productFromService) => this.#productFromDummy(productFromService),
