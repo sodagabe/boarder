@@ -8,7 +8,7 @@ import {
   where,
   setDoc,
 } from "firebase/firestore";
-import db from "../config/firebase/db";
+import db from "../config/firebase/firestore";
 
 class FirestoreAPI {
   static #getCollectionRef(collectionName) {
