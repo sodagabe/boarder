@@ -7,6 +7,7 @@ import {
   query,
   orderBy,
   where,
+  setDoc,
 } from "firebase/firestore";
 import app from "./config";
 
@@ -76,6 +77,23 @@ class FirestoreAPI {
    */
   static getCondition(fieldName, operator, value) {
     return where(fieldName, operator, value);
+  }
+
+  /**
+   * Add a document to a collection.
+   *
+   * @param {string} collectionName - Name of the collection to add the document to
+   * @param {Object} doc - Document to add. The object's properties and theirvalues will convert into corresponding fields.
+   * @returns {import("firebase/firestore").DocumentReference}
+   */
+  static async addDoc(collectionName, data, converter = null) {
+    const collectionRef = this.#getCollectionRef(collectionName);
+    let docRef = doc(collectionRef);
+    if (converter) {
+      docRef = docRef.withConverter(converter);
+    }
+    await setDoc(docRef, data);
+    return docRef;
   }
 }
 
