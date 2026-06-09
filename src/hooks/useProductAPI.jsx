@@ -4,10 +4,10 @@ import ProductAPI from "../js/productAPI";
 /**
  * Bridge from React to the JS Products API.
  *
- * @param {object} props
- * @param {ProductAPI.Services} props.serviceType Enum value that specifies the wanted service
- * @param {object} props.params Flat object containig the parameters to send to the wanted service. MUST BE MEMOIZED BEFORE CALLING THIS FUNCTION!
- * @returns {Array}
+ * @param {Object} props
+ * @param {Symbol} props.serviceType - ProductAPI.Services enum value that specifies the wanted service
+ * @param {Object} props.params - Flat object containing the parameters to send to the wanted service. **MUST BE PRE-MEMOIZED!**
+ * @returns {Product[]}
  */
 function useProductAPI({ serviceType, params }) {
   const [items, setItems] = useState([]);
