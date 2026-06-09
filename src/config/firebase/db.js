@@ -9,7 +9,7 @@ import {
   where,
   setDoc,
 } from "firebase/firestore";
-import app from "./config";
+import app from "./base";
 
 const db = getFirestore(app);
 
