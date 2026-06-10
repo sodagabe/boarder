@@ -8,7 +8,7 @@ import {
   where,
   setDoc,
 } from "firebase/firestore";
-import db from "../config/firebase/db";
+import db from "../config/firebase/firestore";
 
 class FirestoreAPI {
   static #getCollectionRef(collectionName) {
@@ -23,8 +23,9 @@ class FirestoreAPI {
   /**
    * Get a specific document from a collection.
    *
-   * @param {string} collection - Name of the collection to retrieve
-   * @returns {import("firebase/firestore").DocumentData}
+   * @param {string} collection - Name of the collection to retrieve the document from.
+   * @param {string} docID - ID of the document to retrieve.
+   * @returns {DocumentData}
    */
   static async getDoc(collectionName, docID) {
     const docRef = this.#getDocRef(collectionName, docID);
@@ -35,16 +36,16 @@ class FirestoreAPI {
   /**
    * Get all documents from a collection.
    *
-   * @param {Object} [parameters] -  Object containing query parameters
-   * @param {string} parameters.collectionName - Name of the collection to retrieve
-   * @param {string[]} [parameters.conditions=[]] - Array of query conditions to apply
-   * @param {string} [parameters.orderingfieldName=null] - Name of the field to order by
-   * @param {("asc"|"desc")} [parameters.orderingType="asc"] - Type of ordering to perform
-   * @returns {[import("firebase/firestore").DocumentData]}
+   * @param {Object} [parameters] -  Object containing query parameters.
+   * @param {string} parameters.collectionName - Name of the collection to retrieve.
+   * @param {QueryFieldFilterConstraint[]} [parameters.constraints=[]] - Array of query constraints to apply. Get constraints from FirestoreAPI.getConstraint().
+   * @param {string} [parameters.orderingfieldName=null] - Name of the field to order by.
+   * @param {("asc"|"desc")} [parameters.orderingType="asc"] - Type of ordering to perform.
+   * @returns {DocumentData[]}
    */
   static async getDocs({
     collectionName,
-    conditions = [],
+    constraints = [],
     orderingFieldName = null,
     orderingType = "asc",
   } = {}) {
@@ -53,35 +54,36 @@ class FirestoreAPI {
     if (orderingFieldName) {
       q = query(
         collectionRef,
-        ...conditions,
+        ...constraints,
         orderBy(orderingFieldName, orderingType),
       );
     } else {
-      q = query(collectionRef, ...conditions);
+      q = query(collectionRef, ...constraints);
     }
     const querySnap = await getDocs(q);
     return querySnap;
   }
 
   /**
-   * Get a ready-to-use query condition.
+   * Get a ready-to-use query constraint.
    * *Wrapper for where().*
    *
-   * @param {string} fieldName - Name of the field to place the condition on
-   * @param {("<"|"<="|"=="|">"|">="|"!=")} operator - Name of the field to place the condition on
-   * @param {string|number} value - Value that will be compared against
-   * @returns {import("firebase/firestore").DocumentData}
+   * @param {string} fieldName - Name of the field to place the constraint on.
+   * @param {("<"|"<="|"=="|">"|">="|"!=")} operator - Name of the field to place the constraint on.
+   * @param {*} value - Value that will be compared against.
+   * @returns {QueryFieldFilterConstraint}
    */
-  static getCondition(fieldName, operator, value) {
+  static getConstraint(fieldName, operator, value) {
     return where(fieldName, operator, value);
   }
 
   /**
    * Add a document to a collection.
    *
-   * @param {string} collectionName - Name of the collection to add the document to
-   * @param {Object} doc - Document to add. The object's properties and theirvalues will convert into corresponding fields.
-   * @returns {import("firebase/firestore").DocumentReference}
+   * @param {string} collectionName - Name of the collection to add the document to.
+   * @param {Object} doc - Data of the document to add. The object's properties and their values will be converted to corresponding document fields.
+   * @param {Object} converter - Object containing toFirestore and fromFirestore methods.
+   * @returns {DocumentReference}
    */
   static async addDoc(collectionName, data, converter = null) {
     const collectionRef = this.#getCollectionRef(collectionName);
