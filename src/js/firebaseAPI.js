@@ -85,9 +85,10 @@ class FirestoreAPI {
    * @param {Object} converter - Object containing toFirestore and fromFirestore methods.
    * @returns {DocumentReference}
    */
-  static async addDoc(collectionName, data, converter = null) {
+  static async addDoc({ collectionName, data, id = null, converter = null }) {
     const collectionRef = this.#getCollectionRef(collectionName);
-    let docRef = doc(collectionRef);
+    const docRefParams = id ? [collectionRef, id] : [collectionRef];
+    let docRef = doc(...docRefParams);
     if (converter) {
       docRef = docRef.withConverter(converter);
     }
