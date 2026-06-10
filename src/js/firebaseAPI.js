@@ -82,7 +82,7 @@ class FirestoreAPI {
    *
    * @param {string} collectionName - Name of the collection to add the document to.
    * @param {Object} doc - Data of the document to add. The object's properties and their values will be converted to corresponding document fields.
-   * @param {Object} [id=null] - Data of the document to add. The object's properties and their values will be converted to corresponding document fields.
+   * @param {string} [id=null] - Data of the document to add. The object's properties and their values will be converted to corresponding document fields.
    * @param {Object} [converter=null] - Object containing toFirestore and fromFirestore methods.
    * @returns {DocumentReference}
    */
