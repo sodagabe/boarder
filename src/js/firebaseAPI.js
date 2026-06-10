@@ -82,12 +82,14 @@ class FirestoreAPI {
    *
    * @param {string} collectionName - Name of the collection to add the document to.
    * @param {Object} doc - Data of the document to add. The object's properties and their values will be converted to corresponding document fields.
-   * @param {Object} converter - Object containing toFirestore and fromFirestore methods.
+   * @param {string} [id=null] - Data of the document to add. The object's properties and their values will be converted to corresponding document fields.
+   * @param {Object} [converter=null] - Object containing toFirestore and fromFirestore methods.
    * @returns {DocumentReference}
    */
-  static async addDoc(collectionName, data, converter = null) {
+  static async addDoc({ collectionName, data, id = null, converter = null }) {
     const collectionRef = this.#getCollectionRef(collectionName);
-    let docRef = doc(collectionRef);
+    const docRefParams = id ? [collectionRef, id] : [collectionRef];
+    let docRef = doc(...docRefParams);
     if (converter) {
       docRef = docRef.withConverter(converter);
     }
