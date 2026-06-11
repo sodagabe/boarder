@@ -45,7 +45,7 @@ class Game extends Product {
       title: title,
       thumbnailURL: thumbnailURL,
       price: price,
-      categoryID: categoryIDs[0],
+      categoryID: categoryIDs ? categoryIDs[0] : null,
     });
     this.#avg_rating = avg_rating;
     this.#categoryIDs = categoryIDs;
@@ -63,6 +63,18 @@ class Game extends Product {
     this.#rank = rank;
     this.#typeIDs = typeIDs;
     this.#year = year;
+  }
+
+  get title() {
+    return super.title;
+  }
+
+  get thumbnailURL() {
+    return super.thumbnailURL;
+  }
+
+  get price() {
+    return super.price;
   }
 
   get avg_rating() {
