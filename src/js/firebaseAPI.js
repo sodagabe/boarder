@@ -7,10 +7,13 @@ import {
   orderBy,
   where,
   setDoc,
+  limit,
 } from "firebase/firestore";
 import db from "../config/firebase/firestore";
 
 class FirestoreAPI {
+  static #DEFAULT_LIMIT = 50;
+
   static #getCollectionRef(collectionName) {
     return collection(db, collectionName);
   }
@@ -48,6 +51,7 @@ class FirestoreAPI {
     constraints = [],
     orderingFieldName = null,
     orderingType = "asc",
+    limitParam = this.#DEFAULT_LIMIT,
   } = {}) {
     const collectionRef = this.#getCollectionRef(collectionName);
     let q;
@@ -56,9 +60,10 @@ class FirestoreAPI {
         collectionRef,
         ...constraints,
         orderBy(orderingFieldName, orderingType),
+        limit(limitParam),
       );
     } else {
-      q = query(collectionRef, ...constraints);
+      q = query(collectionRef, ...constraints, limit(limitParam));
     }
     const querySnap = await getDocs(q);
     return querySnap;
