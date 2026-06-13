@@ -53,7 +53,7 @@ class ProductAPI {
           FirestoreAPI.getConstraint(
             "categoryIDs",
             "array-contains",
-            categoryID,
+            Number(categoryID),
           ),
         ]
       : [];
