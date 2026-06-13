@@ -5,6 +5,7 @@ import FirestoreAPI from "./firebaseAPI";
 class ProductAPI {
   static Services = Object.freeze({
     PRODUCTS: Symbol("products"),
+    CATEGORY: Symbol("category"),
     CATEGORIES: Symbol("categories"),
   });
 
@@ -24,6 +25,12 @@ class ProductAPI {
     });
   }
 
+  static async #getItem(fetch, transform) {
+    const itemFromService = await fetch();
+    const item = transform(itemFromService);
+    return item;
+  }
+
   static async #getItems(fetch, transform) {
     const itemsFromService = await fetch();
     const items = [];
@@ -39,6 +46,9 @@ class ProductAPI {
     switch (serviceType) {
       case this.Services.PRODUCTS:
         service = (params) => this.getProducts(params);
+        break;
+      case this.Services.CATEGORY:
+        service = (params) => this.getCategory(params);
         break;
       case this.Services.CATEGORIES:
         service = () => this.getCategories();
@@ -66,6 +76,18 @@ class ProductAPI {
       (productFromService) => this.#productFromFirebase(productFromService),
     );
     return products;
+  }
+
+  static async getCategory({ categoryID }) {
+    const params = {
+      collectionName: "game_categories",
+      docID: categoryID,
+    };
+    const category = await this.#getItem(
+      () => FirestoreAPI.getDoc(params),
+      (categoryFromService) => this.#categoryFromFirebase(categoryFromService),
+    );
+    return category;
   }
 
   static async getCategories() {

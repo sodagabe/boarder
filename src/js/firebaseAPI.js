@@ -18,7 +18,7 @@ class FirestoreAPI {
     return collection(db, collectionName);
   }
 
-  static async #getDocRef(collectionName, docID) {
+  static #getDocRef(collectionName, docID) {
     const docRef = doc(db, collectionName, docID);
     return docRef;
   }
@@ -30,7 +30,7 @@ class FirestoreAPI {
    * @param {string} docID - ID of the document to retrieve.
    * @returns {DocumentData}
    */
-  static async getDoc(collectionName, docID) {
+  static async getDoc({ collectionName, docID }) {
     const docRef = this.#getDocRef(collectionName, docID);
     const docSnap = await getDoc(docRef);
     return docSnap;
