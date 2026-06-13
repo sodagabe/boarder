@@ -1,29 +1,34 @@
-import DummyAPI from "./dummyAPI";
-import Product from "./entities/product";
 import Category from "./entities/category";
+import Game from "./entities/game";
+import FirestoreAPI from "./firebaseAPI";
 
 class ProductAPI {
   static Services = Object.freeze({
     PRODUCTS: Symbol("products"),
+    CATEGORY: Symbol("category"),
     CATEGORIES: Symbol("categories"),
   });
 
-  static #productFromDummy(dummyProduct) {
-    return new Product({
-      id: dummyProduct.id,
-      title: dummyProduct.title,
-      description: dummyProduct.description,
-      thumbnailURL: dummyProduct.thumbnail,
-      price: dummyProduct.price,
-      categoryID: dummyProduct.categoryID,
+  static #productFromFirebase(firebaseProduct) {
+    const productData = firebaseProduct.data();
+    return new Game({
+      id: firebaseProduct.id,
+      ...productData,
     });
   }
 
-  static #categoryFromDummy(dummyCategory) {
+  static #categoryFromFirebase(firebaseCategory) {
+    const categoryData = firebaseCategory.data();
     return new Category({
-      id: dummyCategory.slug,
-      name: dummyCategory.name,
+      id: firebaseCategory.id,
+      name: categoryData.name,
     });
+  }
+
+  static async #getItem(fetch, transform) {
+    const itemFromService = await fetch();
+    const item = transform(itemFromService);
+    return item;
   }
 
   static async #getItems(fetch, transform) {
@@ -42,6 +47,9 @@ class ProductAPI {
       case this.Services.PRODUCTS:
         service = (params) => this.getProducts(params);
         break;
+      case this.Services.CATEGORY:
+        service = (params) => this.getCategory(params);
+        break;
       case this.Services.CATEGORIES:
         service = () => this.getCategories();
         break;
@@ -50,17 +58,45 @@ class ProductAPI {
   }
 
   static async getProducts({ categoryID }) {
+    const constraints = categoryID
+      ? [
+          FirestoreAPI.getConstraint(
+            "categoryIDs",
+            "array-contains",
+            Number(categoryID),
+          ),
+        ]
+      : [];
+    const params = {
+      collectionName: "games",
+      constraints: constraints,
+    };
     const products = await this.#getItems(
-      () => DummyAPI.getProducts(categoryID),
-      (productFromService) => this.#productFromDummy(productFromService),
+      () => FirestoreAPI.getDocs(params),
+      (productFromService) => this.#productFromFirebase(productFromService),
     );
     return products;
   }
 
+  static async getCategory({ categoryID }) {
+    const params = {
+      collectionName: "game_categories",
+      docID: categoryID,
+    };
+    const category = await this.#getItem(
+      () => FirestoreAPI.getDoc(params),
+      (categoryFromService) => this.#categoryFromFirebase(categoryFromService),
+    );
+    return category;
+  }
+
   static async getCategories() {
+    const params = {
+      collectionName: "game_categories",
+    };
     const categories = await this.#getItems(
-      () => DummyAPI.getCategories(),
-      (categoryFromService) => this.#categoryFromDummy(categoryFromService),
+      () => FirestoreAPI.getDocs(params),
+      (categoryFromService) => this.#categoryFromFirebase(categoryFromService),
     );
     return categories;
   }

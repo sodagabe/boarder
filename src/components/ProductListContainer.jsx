@@ -1,6 +1,7 @@
+import useProductData from "../hooks/useProductData";
 import Product from "./Product";
 import ProductList from "./ProductList";
-import useProductData from "../hooks/useProductData";
+import CategoryTitleContainer from "./CategoryTitleContainer";
 
 function ProductListContainer({ categoryID }) {
   const products = useProductData(categoryID);
@@ -9,7 +10,7 @@ function ProductListContainer({ categoryID }) {
   };
   return products.length ? (
     <section className="flex flex-col">
-      {categoryID ? <h2 className="text-4xl">{categoryID}</h2> : null}
+      {categoryID && <CategoryTitleContainer categoryID={categoryID} />}
       <ProductList products={products} mapFunction={buildProduct} />
     </section>
   ) : (
