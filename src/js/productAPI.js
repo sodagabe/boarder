@@ -4,6 +4,7 @@ import FirestoreAPI from "./firebaseAPI";
 
 class ProductAPI {
   static Services = Object.freeze({
+    PRODUCT: Symbol("product"),
     PRODUCTS: Symbol("products"),
     CATEGORY: Symbol("category"),
     CATEGORIES: Symbol("categories"),
@@ -44,6 +45,9 @@ class ProductAPI {
   static getService(serviceType) {
     let service = null;
     switch (serviceType) {
+      case this.Services.PRODUCT:
+        service = (params) => this.getProduct(params);
+        break;
       case this.Services.PRODUCTS:
         service = (params) => this.getProducts(params);
         break;
@@ -55,6 +59,18 @@ class ProductAPI {
         break;
     }
     return service;
+  }
+
+  static async getProduct({ productID }) {
+    const params = {
+      collectionName: "games",
+      docID: productID,
+    };
+    const product = await this.#getItem(
+      () => FirestoreAPI.getDoc(params),
+      (productFromService) => this.#productFromFirebase(productFromService),
+    );
+    return product;
   }
 
   static async getProducts({ categoryID }) {
