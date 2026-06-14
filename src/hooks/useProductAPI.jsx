@@ -11,21 +11,26 @@ import ProductAPI from "../js/productAPI";
  */
 function useProductAPI({ serviceType, params }) {
   const [items, setItems] = useState([]);
+  const [loaded, setLoaded] = useState(false);
   useEffect(() => {
-    let finishedFetching = false;
-    const service = ProductAPI.getService(serviceType);
-    async function startFetching() {
-      const items = await service(params);
-      if (!finishedFetching) {
-        setItems(items);
+    if (params) {
+      let finishedFetching = false;
+      const service = ProductAPI.getService(serviceType);
+      async function startFetching() {
+        setLoaded(false);
+        const items = await service(params);
+        if (!finishedFetching) {
+          setItems(items);
+          setLoaded(true);
+        }
       }
+      startFetching();
+      return () => {
+        finishedFetching = true;
+      };
     }
-    startFetching();
-    return () => {
-      finishedFetching = true;
-    };
   }, [serviceType, params]);
-  return items;
+  return [items, loaded];
 }
 
 export default useProductAPI;

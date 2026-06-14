@@ -4,11 +4,11 @@ import ProductList from "./ProductList";
 import CategoryTitleContainer from "./CategoryTitleContainer";
 
 function ProductListContainer({ categoryID }) {
-  const products = useProductData(categoryID);
+  const [products, productsLoaded] = useProductData(categoryID);
   const buildProduct = (product) => {
     return <Product key={product.id} product={product} />;
   };
-  return products.length ? (
+  return productsLoaded ? (
     <section className="flex flex-col">
       {categoryID && <CategoryTitleContainer categoryID={categoryID} />}
       <ProductList products={products} mapFunction={buildProduct} />

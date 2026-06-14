@@ -9,11 +9,11 @@ function useProductData(categoryID) {
     }),
     [categoryID],
   );
-  const products = useProductAPI({
+  const results = useProductAPI({
     serviceType: ProductAPI.Services.PRODUCTS,
     params: params,
   });
-  return products;
+  return results;
 }
 
 export default useProductData;
