@@ -1,9 +1,21 @@
+import { useState } from "react";
 import CartContext from "../context/CartContext";
+import CartItem from "../js/entities/cartItem";
 
 function CartProvider({ children }) {
-  const cartData = [];
+  const [cart, setCart] = useState({});
+  function addToCart(product) {
+    const id = product.id;
+    const updatedCart = { ...cart };
+    if (Object.hasOwn(cart, id)) {
+      updatedCart[id].qty++;
+    } else {
+      updatedCart[id] = new CartItem(id);
+    }
+    setCart(updatedCart);
+  }
   return (
-    <CartContext.Provider value={cartData}>{children}</CartContext.Provider>
+    <CartContext.Provider value={addToCart}>{children}</CartContext.Provider>
   );
 }
 
