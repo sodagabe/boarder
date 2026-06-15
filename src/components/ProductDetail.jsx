@@ -1,4 +1,6 @@
-function ProductDetail({ product, category }) {
+import Button from "./Button";
+
+function ProductDetail({ product, category, handler }) {
   return (
     <section className="flex">
       <div>Picture</div>
@@ -8,6 +10,7 @@ function ProductDetail({ product, category }) {
           {product.min_players} - {product.max_players} players
         </p>
         <p>{category.name}</p>
+        <Button label="Add to cart" handler={handler} />
       </div>
     </section>
   );
