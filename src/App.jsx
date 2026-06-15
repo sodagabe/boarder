@@ -6,8 +6,8 @@ import CartProvider from "./providers/CartProvider";
 
 function App() {
   return (
-    <Routes>
-      <CartProvider>
+    <CartProvider>
+      <Routes>
         <Route element={<BasicLayout />}>
           <Route index element={<ProductsSectionContainer />} />
           <Route
@@ -19,8 +19,8 @@ function App() {
             element={<ProductDetailContainer />}
           />
         </Route>
-      </CartProvider>
-    </Routes>
+      </Routes>
+    </CartProvider>
   );
 }
 
