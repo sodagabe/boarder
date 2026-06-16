@@ -1,6 +1,7 @@
 import Product from "./product";
 
 class Game extends Product {
+  #imageURL;
   #avg_rating;
   #categoryIDs;
   #designerIDs;
@@ -22,6 +23,7 @@ class Game extends Product {
     id,
     title,
     thumbnailURL,
+    imageURL,
     price,
     avg_rating,
     categoryIDs,
@@ -47,6 +49,7 @@ class Game extends Product {
       price: price,
       categoryID: categoryIDs ? categoryIDs[0] : null,
     });
+    this.#imageURL = imageURL;
     this.#avg_rating = avg_rating;
     this.#categoryIDs = categoryIDs;
     this.#designerIDs = designerIDs;
@@ -75,6 +78,10 @@ class Game extends Product {
 
   get price() {
     return super.price;
+  }
+
+  get imageURL() {
+    return this.#imageURL;
   }
 
   get avg_rating() {
