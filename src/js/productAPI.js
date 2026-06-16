@@ -73,7 +73,7 @@ class ProductAPI {
     return product;
   }
 
-  static async getProducts({ categoryID }) {
+  static async getProducts({ categoryID, orderingFieldName }) {
     const constraints = categoryID
       ? [
           FirestoreAPI.getConstraint(
@@ -86,6 +86,7 @@ class ProductAPI {
     const params = {
       collectionName: "games",
       constraints: constraints,
+      orderingFieldName: orderingFieldName,
     };
     const products = await this.#getItems(
       () => FirestoreAPI.getDocs(params),
