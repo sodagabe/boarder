@@ -74,7 +74,7 @@ class FirestoreAPI {
    * *Wrapper for where().*
    *
    * @param {string} fieldName - Name of the field to place the constraint on.
-   * @param {("<"|"<="|"=="|">"|">="|"!=")} operator - Name of the field to place the constraint on.
+   * @param {("<"|"<="|"=="|">"|">="|"!="|"in"|"not-in")} operator - Name of the field to place the constraint on.
    * @param {*} value - Value that will be compared against.
    * @returns {QueryFieldFilterConstraint}
    */
