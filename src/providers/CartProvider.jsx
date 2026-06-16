@@ -14,8 +14,13 @@ function CartProvider({ children }) {
     }
     setCart(updatedCart);
   }
+  function getCartQty() {
+    return Object.keys(cart).length;
+  }
   return (
-    <CartContext.Provider value={addToCart}>{children}</CartContext.Provider>
+    <CartContext.Provider value={{ addToCart, getCartQty }}>
+      {children}
+    </CartContext.Provider>
   );
 }
 
