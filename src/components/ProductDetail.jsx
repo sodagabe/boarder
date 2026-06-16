@@ -11,7 +11,12 @@ function ProductDetail({ product, category, handler }) {
         <p>
           {product.min_players} - {product.max_players} players
         </p>
+        <p>
+          {product.min_time} - {product.max_time} minutes
+        </p>
+        <p>{product.min_age} and up</p>
         <p>{category.name}</p>
+        <p>{product.price}</p>
         <Button label="Add to cart" handler={handler} />
       </div>
     </section>
