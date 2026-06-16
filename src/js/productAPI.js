@@ -83,6 +83,9 @@ class ProductAPI {
           ),
         ]
       : [];
+    // TODO: Remove rank constraint when product database is complete with images and prices
+    const rankConstraint = FirestoreAPI.getConstraint("rank", "<=", 50);
+    constraints.push(rankConstraint);
     const params = {
       collectionName: "games",
       constraints: constraints,
