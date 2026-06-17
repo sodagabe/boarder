@@ -1,6 +1,7 @@
 import { useState } from "react";
 import CartContext from "../context/CartContext";
 import CartItem from "../js/entities/cartItem";
+import { toCurrency } from "../js/utils/math";
 
 function CartProvider({ children }) {
   const [cart, setCart] = useState({});
@@ -26,35 +27,36 @@ function CartProvider({ children }) {
   }
 
   function getItemsSubtotal() {
-    return cartArray.reduce((subtotal, item) => {
+    const subtotal = cartArray.reduce((subtotal, item) => {
       const itemSubtotal = item.ppu * item.qty;
       return subtotal + itemSubtotal;
     }, 0);
+    return toCurrency(subtotal);
   }
 
   function getShippingFee() {
-    let fee = 0;
+    let fee;
     const totalQty = cartArray.reduce((subQty, item) => subQty + item.qty, 0);
-    switch (totalQty) {
-      case totalQty < 3:
-        fee = 10;
-        break;
-      case totalQty >= 3 && totalQty < 10:
-        fee = 20;
-        break;
-      case totalQty >= 10:
-        fee = 50;
-        break;
-    }
+    if (totalQty < 3) fee = 10;
+    else if (totalQty >= 3 && totalQty < 10) fee = 20;
+    else fee = 50;
     return fee;
   }
 
   function getVAT(subtotal) {
-    return 0.15 * subtotal;
+    const amount = 0.15 * subtotal;
+    return toCurrency(amount);
   }
 
   function emptyCart() {
     setCart({});
+  }
+
+  function removeItem(item) {
+    const productID = item.id;
+    const updatedCart = { ...cart };
+    delete updatedCart[productID];
+    setCart(updatedCart);
   }
 
   return (
@@ -67,6 +69,7 @@ function CartProvider({ children }) {
         getShippingFee,
         getVAT,
         emptyCart,
+        removeItem,
       }}
     >
       {children}
