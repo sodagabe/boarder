@@ -2,13 +2,13 @@ class CartItem {
   #id;
   #title;
   #thumbnailURL;
-  #ppu;
+  #price;
 
   constructor({ product, qty = 1 }) {
     this.#id = product.id;
     this.#title = product.title;
     this.#thumbnailURL = product.thumbnailURL;
-    this.#ppu = product.price;
+    this.#price = product.price;
     this.qty = qty;
   }
 
@@ -24,12 +24,16 @@ class CartItem {
     return this.#thumbnailURL;
   }
 
-  get ppu() {
-    return this.#ppu;
+  get price() {
+    return this.#price;
   }
 
   get subtotal() {
-    return this.ppu * this.qty;
+    return this.price * this.qty;
+  }
+
+  get multiple() {
+    return Boolean(this.qty > 1);
   }
 
   toJSON() {
@@ -37,7 +41,7 @@ class CartItem {
       id: this.id,
       title: this.title,
       thumbnailURL: this.thumbnailURL,
-      ppu: this.ppu,
+      price: this.price,
       qty: this.qty,
     };
   }

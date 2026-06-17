@@ -13,9 +13,9 @@ function CartItem({ item, removeHandler }) {
       <div className="flex flex-col">
         <h2 className="text-xl font-semibold">{item.title}</h2>
         <p>
-          {item.qty} unit{item.qty > 1 && "s"}
+          {item.qty} unit{item.multiple && "s"}
         </p>
-        <p className="currency">{item.ppu * item.qty}</p>
+        <p className="currency">{item.subtotal}</p>
         <div className="flex grow items-end">
           <GhostButton label="Remove" handler={removeHandler} />
         </div>

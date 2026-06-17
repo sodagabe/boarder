@@ -1,15 +1,16 @@
 import { useEffect, useState } from "react";
 
-function getValueFromStorage(key, defaultValue) {
+function getValueFromStorage(key, defaultValue, parseFunction) {
   const savedValueString = localStorage.getItem(key);
   const savedValue = JSON.parse(savedValueString);
-  const initialValue = savedValue || defaultValue;
+  const parsedValue = parseFunction(savedValue);
+  const initialValue = parsedValue || defaultValue;
   return initialValue;
 }
 
-function useLocalStorage(key, defaultValue) {
+function useLocalStorage(key, defaultValue, parseFunction = (value) => value) {
   const [value, setValue] = useState(() =>
-    getValueFromStorage(key, defaultValue),
+    getValueFromStorage(key, defaultValue, parseFunction),
   );
 
   useEffect(() => {

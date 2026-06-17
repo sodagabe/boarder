@@ -3,9 +3,17 @@ import CartItem from "../js/entities/cartItem";
 import { toCurrency } from "../js/utils/math";
 import useLocalStorage from "../hooks/useLocalStorage";
 
-function CartProvider({ children }) {
-  const [cart, setCart] = useLocalStorage("cart", {});
+function parseSavedItems(savedObject) {
+  let cartItems = {};
+  for (const [key, item] of Object.entries(savedObject)) {
+    const cartItem = new CartItem({ product: item, qty: item.qty });
+    cartItems[key] = cartItem;
+  }
+  return cartItems;
+}
 
+function CartProvider({ children }) {
+  const [cart, setCart] = useLocalStorage("cart", {}, parseSavedItems);
   const cartArray = Object.values(cart);
 
   function addToCart(product) {
@@ -29,7 +37,7 @@ function CartProvider({ children }) {
 
   function getItemsSubtotal() {
     const subtotal = cartArray.reduce((subtotal, item) => {
-      const itemSubtotal = item.ppu * item.qty;
+      const itemSubtotal = item.price * item.qty;
       return subtotal + itemSubtotal;
     }, 0);
     return toCurrency(subtotal);
