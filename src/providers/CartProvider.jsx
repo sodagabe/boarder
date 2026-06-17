@@ -1,10 +1,11 @@
-import { useState } from "react";
 import CartContext from "../context/CartContext";
 import CartItem from "../js/entities/cartItem";
 import { toCurrency } from "../js/utils/math";
+import useLocalStorage from "../hooks/useLocalStorage";
 
 function CartProvider({ children }) {
-  const [cart, setCart] = useState({});
+  const [cart, setCart] = useLocalStorage("cart", {});
+
   const cartArray = Object.values(cart);
 
   function addToCart(product) {

@@ -31,6 +31,16 @@ class CartItem {
   get subtotal() {
     return this.ppu * this.qty;
   }
+
+  toJSON() {
+    return {
+      id: this.id,
+      title: this.title,
+      thumbnailURL: this.thumbnailURL,
+      ppu: this.ppu,
+      qty: this.qty,
+    };
+  }
 }
 
 export default CartItem;
