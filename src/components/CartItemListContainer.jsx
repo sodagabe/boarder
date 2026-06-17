@@ -4,10 +4,11 @@ import CartContext from "../context/CartContext";
 import GhostButton from "./GhostButton";
 
 function CartItemListContainer() {
-  const { getCartItems, emptyCart } = useContext(CartContext);
+  const { getCartItems, emptyCart, removeItem } = useContext(CartContext);
   const items = getCartItems();
   function buildCartItem(item) {
-    return <CartItem key={item.id} item={item} />;
+    const removeHandler = () => removeItem(item);
+    return <CartItem key={item.id} item={item} removeHandler={removeHandler} />;
   }
   return (
     <section className="flex grow flex-col gap-4">
