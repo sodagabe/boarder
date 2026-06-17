@@ -5,7 +5,9 @@ function NavBar({ brandName, cartQty }) {
     <header className="flex grow justify-center">
       <div className="flex grow gap-8 p-4">
         <div className="grow text-2xl font-extrabold uppercase">
-          {brandName}
+          <span className="h-full">
+            <NavLink to={"/"}>{brandName}</NavLink>
+          </span>
         </div>
         <NavLink to="/cart">
           <div className="flex gap-1">
