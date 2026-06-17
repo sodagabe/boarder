@@ -16,7 +16,7 @@ function ProductDetail({ product, category, handler }) {
         </p>
         <p>{product.min_age} and up</p>
         <p>{category.name}</p>
-        <p>{product.price}</p>
+        <p className="currency">{product.price}</p>
         <Button label="Add to cart" handler={handler} />
       </div>
     </section>

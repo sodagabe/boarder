@@ -1,1 +1,7 @@
 @import "tailwindcss";
+
+@utility currency {
+  &::before {
+    content: "$ ";
+  }
+}

@@ -15,7 +15,7 @@ function CartItem({ item, removeHandler }) {
         <p>
           {item.qty} unit{item.qty > 1 && "s"}
         </p>
-        <p>{item.ppu * item.qty}</p>
+        <p className="currency">{item.ppu * item.qty}</p>
         <div className="flex grow items-end">
           <GhostButton label="Remove" handler={removeHandler} />
         </div>

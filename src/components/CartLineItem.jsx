@@ -1,10 +1,11 @@
 function CartLineItem({ label, value, border = true, total = false }) {
+  let className = "flex py-4 w-full";
+  const borderClass = border ? "border-b border-gray-200" : "";
+  const totalClass = total ? "font-semibold" : "";
   return (
-    <div
-      className={`flex w-full ${border && "border-b border-gray-200"} ${total && "font-semibold"} py-4`}
-    >
+    <div className={`${className} ${borderClass} ${totalClass}`}>
       <span className="grow">{label}</span>
-      <span>{value}</span>
+      <span className="currency">{value}</span>
     </div>
   );
 }
