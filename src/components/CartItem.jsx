@@ -10,10 +10,10 @@ function CartItem({ item }) {
       </div>
       <div>
         <h2 className="text-xl font-semibold">{item.title}</h2>
-        <p>{item.ppu}</p>
         <p>
           {item.qty} unit{item.qty > 1 && "s"}
         </p>
+        <p>{item.ppu * item.qty}</p>
       </div>
     </article>
   );
