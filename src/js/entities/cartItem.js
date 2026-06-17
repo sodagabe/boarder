@@ -1,13 +1,29 @@
 class CartItem {
   #id;
+  #title;
+  #ppu;
 
-  constructor(id, qty = 1) {
-    this.#id = id;
+  constructor({ product, qty = 1 }) {
+    this.#id = product.id;
+    this.#title = product.title;
+    this.#ppu = product.price;
     this.qty = qty;
   }
 
   get id() {
     return this.#id;
+  }
+
+  get title() {
+    return this.#title;
+  }
+
+  get ppu() {
+    return this.#ppu;
+  }
+
+  get subtotal() {
+    return this.ppu * this.qty;
   }
 }
 
