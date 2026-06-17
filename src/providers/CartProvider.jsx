@@ -37,15 +37,23 @@ function CartProvider({ children }) {
   function getShippingFee() {
     let fee;
     const totalQty = cartArray.reduce((subQty, item) => subQty + item.qty, 0);
-    if (totalQty < 3) fee = 10;
-    else if (totalQty >= 3 && totalQty < 10) fee = 20;
-    else fee = 50;
-    return fee;
+    if (totalQty < 3) fee = 9.99;
+    else if (totalQty >= 3 && totalQty < 10) fee = 19.99;
+    else fee = 49.99;
+    return toCurrency(fee);
   }
 
-  function getVAT(subtotal) {
+  function getTax(subtotal) {
     const amount = 0.15 * subtotal;
     return toCurrency(amount);
+  }
+
+  function getTotal() {
+    const itemsSubtotal = Number(getItemsSubtotal());
+    const tax = Number(getTax(itemsSubtotal));
+    const shipping = Number(getShippingFee());
+    const total = itemsSubtotal + tax + shipping;
+    return toCurrency(total);
   }
 
   function emptyCart() {
@@ -66,8 +74,9 @@ function CartProvider({ children }) {
         addToCart,
         getCartQty,
         getItemsSubtotal,
+        getTotal,
         getShippingFee,
-        getVAT,
+        getTax,
         emptyCart,
         removeItem,
       }}

@@ -5,12 +5,13 @@ import CartItemListContainer from "./CartItemListContainer";
 import EmptyCart from "./EmptyCart";
 
 function CartContainer() {
-  const { getItemsSubtotal, getShippingFee, getVAT, getCartQty } =
+  const { getItemsSubtotal, getShippingFee, getTax, getCartQty, getTotal } =
     useContext(CartContext);
   const cartQty = getCartQty();
   const itemsSubtotal = getItemsSubtotal();
   const shipping = getShippingFee();
-  const vat = getVAT(itemsSubtotal);
+  const tax = getTax(itemsSubtotal);
+  const total = getTotal();
   return (
     <section className="flex gap-4">
       {cartQty ? (
@@ -18,8 +19,9 @@ function CartContainer() {
           <CartItemListContainer />
           <CartTotal
             itemsSubtotal={itemsSubtotal}
-            vat={vat}
+            tax={tax}
             shipping={shipping}
+            total={total}
           />
         </>
       ) : (
