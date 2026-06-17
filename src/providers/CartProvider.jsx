@@ -50,11 +50,22 @@ function CartProvider({ children }) {
   }
 
   function getTotal() {
+    const breakdown = getTotalBreakdown();
+    return breakdown.total;
+  }
+
+  function getTotalBreakdown() {
     const itemsSubtotal = Number(getItemsSubtotal());
     const tax = Number(getTax(itemsSubtotal));
     const shipping = Number(getShippingFee());
-    const total = itemsSubtotal + tax + shipping;
-    return toCurrency(total);
+    const total = toCurrency(itemsSubtotal + tax + shipping);
+    const breakdown = {
+      itemsSubtotal,
+      tax,
+      shipping,
+      total,
+    };
+    return breakdown;
   }
 
   function emptyCart() {
@@ -75,8 +86,9 @@ function CartProvider({ children }) {
         addToCart,
         getCartQty,
         getItemsSubtotal,
-        getTotal,
         getShippingFee,
+        getTotal,
+        getTotalBreakdown,
         getTax,
         emptyCart,
         removeItem,
