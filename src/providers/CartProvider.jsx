@@ -53,6 +53,10 @@ function CartProvider({ children }) {
     return 0.15 * subtotal;
   }
 
+  function emptyCart() {
+    setCart({});
+  }
+
   return (
     <CartContext
       value={{
@@ -62,6 +66,7 @@ function CartProvider({ children }) {
         getItemsSubtotal,
         getShippingFee,
         getVAT,
+        emptyCart,
       }}
     >
       {children}
