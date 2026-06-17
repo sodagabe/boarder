@@ -1,7 +1,7 @@
 function Button({ label, handler, fullWidth = false }) {
   return (
     <button
-      className={`w-fit rounded-lg bg-black p-3 font-medium text-white ${fullWidth && "w-full"}`}
+      className={`${!fullWidth && "w-fit"} rounded-lg bg-black p-3 font-medium text-white`}
       onClick={handler}
     >
       {label}
