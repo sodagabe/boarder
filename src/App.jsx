@@ -3,6 +3,7 @@ import BasicLayout from "./components/layouts/BasicLayout";
 import ProductsSectionContainer from "./components/ProductsSectionContainer";
 import ProductDetailContainer from "./components/ProductDetailContainer";
 import CartProvider from "./providers/CartProvider";
+import CartContainer from "./components/CartContainer";
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
             path="/product/:productID"
             element={<ProductDetailContainer />}
           />
+          <Route path="/cart" element={<CartContainer />} />
         </Route>
       </Routes>
     </CartProvider>
