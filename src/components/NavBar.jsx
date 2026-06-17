@@ -1,3 +1,5 @@
+import { NavLink } from "react-router";
+
 function NavBar({ brandName, cartQty }) {
   return (
     <header className="flex grow justify-center">
@@ -5,10 +7,12 @@ function NavBar({ brandName, cartQty }) {
         <div className="grow text-2xl font-extrabold uppercase">
           {brandName}
         </div>
-        <div className="flex gap-1">
-          <span>Cart</span>
-          <span className="font-bold">{cartQty}</span>
-        </div>
+        <NavLink to="/cart">
+          <div className="flex gap-1">
+            <span>Cart</span>
+            <span className="font-bold">{cartQty}</span>
+          </div>
+        </NavLink>
       </div>
     </header>
   );
