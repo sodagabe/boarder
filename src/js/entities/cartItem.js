@@ -1,11 +1,13 @@
 class CartItem {
   #id;
   #title;
+  #thumbnailURL;
   #ppu;
 
   constructor({ product, qty = 1 }) {
     this.#id = product.id;
     this.#title = product.title;
+    this.#thumbnailURL = product.thumbnailURL;
     this.#ppu = product.price;
     this.qty = qty;
   }
@@ -16,6 +18,10 @@ class CartItem {
 
   get title() {
     return this.#title;
+  }
+
+  get thumbnailURL() {
+    return this.#thumbnailURL;
   }
 
   get ppu() {
