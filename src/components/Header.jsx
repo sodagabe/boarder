@@ -1,4 +1,4 @@
-import { NavLink } from "react-router";
+import { Link, NavLink } from "react-router";
 import useCart from "../hooks/useCart";
 
 function Header() {
@@ -11,7 +11,7 @@ function Header() {
       <div className="flex max-w-7xl grow items-center p-4">
         <div className="grow text-2xl font-extrabold uppercase">
           <span className="text-primary-500">
-            <NavLink to={"/"}>{typographicLogo}</NavLink>
+            <Link to={"/"}>{typographicLogo}</Link>
           </span>
         </div>
         <NavLink to="/cart" className="flex h-full items-center px-2">

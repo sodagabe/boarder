@@ -1,6 +1,6 @@
 import { Routes, Route } from "react-router";
 import BasicLayout from "./components/layouts/BasicLayout";
-import ProductsSectionContainer from "./components/ProductsSectionContainer";
+import ProductsSection from "./components/ProductsSection";
 import ProductDetailContainer from "./components/ProductDetailContainer";
 import CheckoutProvider from "./providers/CheckoutProvider";
 import CartProvider from "./providers/CartProvider";
@@ -15,11 +15,8 @@ function App() {
       <CheckoutProvider>
         <Routes>
           <Route element={<BasicLayout />}>
-            <Route index element={<ProductsSectionContainer />} />
-            <Route
-              path="/category/:categoryID"
-              element={<ProductsSectionContainer />}
-            />
+            <Route index element={<ProductsSection />} />
+            <Route path="/category/:categoryID" element={<ProductsSection />} />
             <Route
               path="/product/:productID"
               element={<ProductDetailContainer />}
