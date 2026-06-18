@@ -3,15 +3,14 @@ import CartContext from "../context/CartContext";
 import CartTotal from "./CartTotal";
 import CartItemListContainer from "./CartItemListContainer";
 import EmptyCart from "./EmptyCart";
+import { useNavigate } from "react-router";
 
 function CartContainer() {
-  const { getItemsSubtotal, getShippingFee, getTax, getCartQty, getTotal } =
-    useContext(CartContext);
+  const { getCartQty, getTotalBreakdown } = useContext(CartContext);
   const cartQty = getCartQty();
-  const itemsSubtotal = getItemsSubtotal();
-  const shipping = getShippingFee();
-  const tax = getTax(itemsSubtotal);
-  const total = getTotal();
+  const { itemsSubtotal, tax, shipping, total } = getTotalBreakdown();
+  const navigate = useNavigate();
+  const handler = () => navigate("/checkout");
   return (
     <section className="flex gap-4">
       {cartQty ? (
@@ -22,6 +21,7 @@ function CartContainer() {
             tax={tax}
             shipping={shipping}
             total={total}
+            buttonHandler={handler}
           />
         </>
       ) : (
