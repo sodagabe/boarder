@@ -13,14 +13,14 @@ function ItemCount({ countState, stock }) {
   return (
     <div className="flex items-center gap-2">
       <IconButton
-        icon={<Plus />}
-        handler={incrementHandler}
+        icon={<Minus />}
+        handler={decrementHandler}
         className="outline-primary-500 text-primary-500 bg-transparent outline-2"
       />
       <div className="w-8 text-center text-lg font-semibold">{count}</div>
       <IconButton
-        icon={<Minus />}
-        handler={decrementHandler}
+        icon={<Plus />}
+        handler={incrementHandler}
         className="outline-primary-500 text-primary-500 bg-transparent outline-2"
       />
     </div>
