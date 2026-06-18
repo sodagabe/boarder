@@ -73,7 +73,7 @@ class ProductAPI {
     return product;
   }
 
-  static async getProducts({ categoryID, orderingFieldName }) {
+  static async getProducts({ categoryID, orderingFieldName = "title" }) {
     const constraints = categoryID
       ? [
           FirestoreAPI.getConstraint(

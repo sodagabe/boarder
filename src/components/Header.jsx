@@ -1,5 +1,6 @@
 import { Link, NavLink } from "react-router";
 import useCart from "../hooks/useCart";
+import { ShoppingCart } from "lucide-react";
 
 function Header() {
   const { getCartQty } = useCart();
@@ -16,7 +17,10 @@ function Header() {
         </div>
         <NavLink to="/cart" className="flex h-full items-center px-2">
           <div className="flex items-center gap-2">
-            <span className={cartQty > 0 && "font-semibold"}>Cart</span>
+            <ShoppingCart />
+            <span className={cartQty > 0 ? "font-semibold" : undefined}>
+              Cart
+            </span>
             {cartQty > 0 && (
               <span className="bg-primary-500 rounded-sm px-2 py-1 font-bold text-white">
                 {cartQty}

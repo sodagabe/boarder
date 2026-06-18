@@ -16,6 +16,7 @@ class Game extends Product {
   #min_time;
   #publisherIDs;
   #rank;
+  #stock;
   #typeIDs;
   #year;
 
@@ -39,6 +40,7 @@ class Game extends Product {
     min_time,
     publisherIDs,
     rank,
+    stock,
     typeIDs,
     year,
   }) {
@@ -64,6 +66,7 @@ class Game extends Product {
     this.#min_time = min_time;
     this.#publisherIDs = publisherIDs;
     this.#rank = rank;
+    this.#stock = stock;
     this.#typeIDs = typeIDs;
     this.#year = year;
   }
@@ -138,6 +141,14 @@ class Game extends Product {
 
   get rank() {
     return this.#rank;
+  }
+
+  get stock() {
+    return this.#stock;
+  }
+
+  get inStock() {
+    return this.stock > 0;
   }
 
   get typeIDs() {

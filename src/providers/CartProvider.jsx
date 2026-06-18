@@ -5,9 +5,11 @@ import useLocalStorage from "../hooks/useLocalStorage";
 
 function parseSavedItems(savedObject) {
   let cartItems = {};
-  for (const [key, item] of Object.entries(savedObject)) {
-    const cartItem = new CartItem({ product: item, qty: item.qty });
-    cartItems[key] = cartItem;
+  if (savedObject) {
+    for (const [key, item] of Object.entries(savedObject)) {
+      const cartItem = new CartItem({ product: item, qty: item.qty });
+      cartItems[key] = cartItem;
+    }
   }
   return cartItems;
 }
@@ -84,7 +86,7 @@ function CartProvider({ children }) {
     const itemsSubtotal = Number(getItemsSubtotal());
     const tax = Number(getTax(itemsSubtotal));
     const shipping = Number(getShippingFee());
-    const total = toCurrency(itemsSubtotal + tax + shipping);
+    const total = Number(toCurrency(itemsSubtotal + tax + shipping));
     const breakdown = {
       itemsSubtotal,
       tax,
