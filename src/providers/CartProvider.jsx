@@ -16,19 +16,23 @@ function CartProvider({ children }) {
   const [cart, setCart] = useLocalStorage("cart", {}, parseSavedItems);
   const cartArray = Object.values(cart);
 
-  function addToCart(product) {
+  function addToCart(product, qty = 1) {
     const id = product.id;
     const updatedCart = { ...cart };
     if (Object.hasOwn(cart, id)) {
-      updatedCart[id].qty++;
+      updatedCart[id].qty += qty;
     } else {
-      updatedCart[id] = new CartItem({ product });
+      updatedCart[id] = new CartItem({ product, qty });
     }
     setCart(updatedCart);
   }
 
   function getCartItems() {
     return cartArray;
+  }
+
+  function isInCart(product) {
+    return Object.hasOwn(cart, product.id);
   }
 
   function getLineItems() {
@@ -107,6 +111,7 @@ function CartProvider({ children }) {
         getCartItems,
         getLineItems,
         addToCart,
+        isInCart,
         getCartQty,
         getItemsSubtotal,
         getShippingFee,

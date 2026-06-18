@@ -1,6 +1,9 @@
 import Button from "./Button";
+import ItemCount from "./ItemCount";
 
-function ProductDetail({ product, category, handler }) {
+function ProductDetail({ product, category, handler, countState, isInCart }) {
+  const [count, setCount] = countState;
+  const stock = 5;
   return (
     <section className="flex h-max grow flex-col sm:flex-row">
       <img
@@ -29,7 +32,16 @@ function ProductDetail({ product, category, handler }) {
           </p>
         </div>
         <p className="currency text-2xl font-bold">{product.price}</p>
-        <Button label="Add to cart" handler={handler} />
+        {isInCart ? (
+          <p className="w-fit rounded-sm px-4 py-3 font-semibold text-neutral-500 outline-2 outline-neutral-500">
+            Already in cart
+          </p>
+        ) : (
+          <>
+            <ItemCount countState={[count, setCount]} stock={stock} />
+            <Button label={() => `Add ${count} to cart`} handler={handler} />
+          </>
+        )}
       </div>
     </section>
   );
