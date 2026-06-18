@@ -1,10 +1,19 @@
-import { useState } from "react";
 import CartContext from "../context/CartContext";
 import CartItem from "../js/entities/cartItem";
 import { toCurrency } from "../js/utils/math";
+import useLocalStorage from "../hooks/useLocalStorage";
+
+function parseSavedItems(savedObject) {
+  let cartItems = {};
+  for (const [key, item] of Object.entries(savedObject)) {
+    const cartItem = new CartItem({ product: item, qty: item.qty });
+    cartItems[key] = cartItem;
+  }
+  return cartItems;
+}
 
 function CartProvider({ children }) {
-  const [cart, setCart] = useState({});
+  const [cart, setCart] = useLocalStorage("cart", {}, parseSavedItems);
   const cartArray = Object.values(cart);
 
   function addToCart(product) {
@@ -22,13 +31,27 @@ function CartProvider({ children }) {
     return cartArray;
   }
 
+  function getLineItems() {
+    let lineItems = [];
+    cartArray.forEach((item) => {
+      const lineItem = {
+        id: item.id,
+        qty: item.qty,
+        price: item.price,
+        subtotal: item.subtotal,
+      };
+      lineItems.push(lineItem);
+    });
+    return lineItems;
+  }
+
   function getCartQty() {
     return Object.keys(cart).length;
   }
 
   function getItemsSubtotal() {
     const subtotal = cartArray.reduce((subtotal, item) => {
-      const itemSubtotal = item.ppu * item.qty;
+      const itemSubtotal = item.price * item.qty;
       return subtotal + itemSubtotal;
     }, 0);
     return toCurrency(subtotal);
@@ -49,11 +72,22 @@ function CartProvider({ children }) {
   }
 
   function getTotal() {
+    const breakdown = getTotalBreakdown();
+    return breakdown.total;
+  }
+
+  function getTotalBreakdown() {
     const itemsSubtotal = Number(getItemsSubtotal());
     const tax = Number(getTax(itemsSubtotal));
     const shipping = Number(getShippingFee());
-    const total = itemsSubtotal + tax + shipping;
-    return toCurrency(total);
+    const total = toCurrency(itemsSubtotal + tax + shipping);
+    const breakdown = {
+      itemsSubtotal,
+      tax,
+      shipping,
+      total,
+    };
+    return breakdown;
   }
 
   function emptyCart() {
@@ -71,11 +105,13 @@ function CartProvider({ children }) {
     <CartContext
       value={{
         getCartItems,
+        getLineItems,
         addToCart,
         getCartQty,
         getItemsSubtotal,
-        getTotal,
         getShippingFee,
+        getTotal,
+        getTotalBreakdown,
         getTax,
         emptyCart,
         removeItem,

@@ -24,6 +24,18 @@ class FirestoreAPI {
   }
 
   /**
+   * Get a reference to a document for later creation.
+   *
+   * @param {string} collection - Name of the collection the document will be added to.
+   * @returns {DocumentReference}
+   */
+  static getNewDocRef({ collectionName }) {
+    const collectionRef = this.#getCollectionRef(collectionName);
+    const docRef = doc(collectionRef);
+    return docRef;
+  }
+
+  /**
    * Get a specific document from a collection.
    *
    * @param {string} collection - Name of the collection to retrieve the document from.
@@ -100,6 +112,18 @@ class FirestoreAPI {
     }
     await setDoc(docRef, data);
     return docRef;
+  }
+
+  /**
+   * Write to a document in a collection.
+   *
+   * @param {string} collectionName - Name of the collection to add the document to.
+   * @param {Object} data - Data to write to the document.
+   * @returns {Promise}
+   */
+
+  static async setDoc({ docRef, data }) {
+    return await setDoc(docRef, data);
   }
 }
 
