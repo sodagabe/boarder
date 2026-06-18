@@ -2,14 +2,8 @@ import GhostButton from "./GhostButton";
 
 function CartItem({ item, removeHandler }) {
   return (
-    <article className="flex h-48 gap-4 rounded-xl bg-orange-50 p-4">
-      <div className="w-40 object-cover">
-        <img
-          className="h-full w-full object-cover"
-          src={item.thumbnailURL}
-          alt=""
-        />
-      </div>
+    <article className="flex gap-4">
+      <img className="h-40 w-40 object-cover" src={item.thumbnailURL} alt="" />
       <div className="flex flex-col">
         <h2 className="text-xl font-semibold">{item.title}</h2>
         <p>

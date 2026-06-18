@@ -11,8 +11,10 @@ function CartItemListContainer() {
     return <CartItem key={item.id} item={item} removeHandler={removeHandler} />;
   }
   return (
-    <section className="flex grow flex-col gap-4">
-      {items.map(buildCartItem)}
+    <section className="flex h-fit grow flex-col gap-8">
+      <div className="flex flex-col gap-8 rounded-xl">
+        {items.map(buildCartItem)}
+      </div>
       <GhostButton label="Empty cart" handler={emptyCart} />
     </section>
   );

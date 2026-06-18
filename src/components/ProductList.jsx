@@ -1,6 +1,6 @@
 function ProductList({ products, mapFunction }) {
   return (
-    <section className="flex flex-col gap-4">
+    <section className="grid w-full gap-4 md:grid-cols-2 lg:grid-cols-3">
       {products.map(mapFunction)}
     </section>
   );

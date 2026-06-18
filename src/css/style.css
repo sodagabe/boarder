@@ -33,6 +33,14 @@
     content: "$ ";
   }
 }
+.category-link.active {
+  color: var(--color-secondary-700);
+  font-weight: 700;
+}
+
+.category-link.active::before {
+  content: "\25CF\0020";
+}
 
 body {
   background-color: var(--color-primary-bg);
