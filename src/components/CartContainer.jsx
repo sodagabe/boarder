@@ -12,7 +12,7 @@ function CartContainer() {
   const navigate = useNavigate();
   const handler = () => navigate("/checkout");
   return (
-    <section className="flex gap-4">
+    <section className="flex w-full gap-4">
       {cartQty ? (
         <>
           <CartItemListContainer />
