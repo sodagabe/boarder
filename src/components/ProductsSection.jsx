@@ -6,7 +6,7 @@ function ProductsSection() {
   const { categoryID } = useParams();
 
   return (
-    <section className="flex grow">
+    <section className="flex grow gap-6">
       <CategoryListContainer />
       <ProductListContainer categoryID={categoryID} />
     </section>
