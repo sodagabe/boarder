@@ -1,3 +1,5 @@
+import { toCurrency } from "../utils/math";
+
 class CartItem {
   #id;
   #title;
@@ -28,8 +30,16 @@ class CartItem {
     return this.#price;
   }
 
+  get priceString() {
+    return toCurrency(this.price);
+  }
+
   get subtotal() {
     return this.price * this.qty;
+  }
+
+  get subtotalString() {
+    return toCurrency(this.subtotal);
   }
 
   get multiple() {

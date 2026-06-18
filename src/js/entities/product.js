@@ -42,6 +42,10 @@ class Product {
     return Product.formatMonetaryValue(amount);
   }
 
+  get priceString() {
+    return toCurrency(this.price);
+  }
+
   get categoryID() {
     return this.#categoryID;
   }

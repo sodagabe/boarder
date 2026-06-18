@@ -83,10 +83,10 @@ function CartProvider({ children }) {
   }
 
   function getTotalBreakdown() {
-    const itemsSubtotal = Number(getItemsSubtotal());
-    const tax = Number(getTax(itemsSubtotal));
-    const shipping = Number(getShippingFee());
-    const total = Number(toCurrency(itemsSubtotal + tax + shipping));
+    const itemsSubtotal = getItemsSubtotal();
+    const tax = getTax(itemsSubtotal);
+    const shipping = getShippingFee();
+    const total = toCurrency(Number(itemsSubtotal) + Number(tax) + Number());
     const breakdown = {
       itemsSubtotal,
       tax,

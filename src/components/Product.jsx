@@ -1,7 +1,7 @@
 import { Link } from "react-router";
 
 function Product({ product }) {
-  const { thumbnailURL, title, description, price, inStock } = product;
+  const { thumbnailURL, title, description, priceString, inStock } = product;
   return (
     <Link to={`/product/${product.id}`}>
       <article
@@ -14,7 +14,11 @@ function Product({ product }) {
         />
         <h2 className="line-clamp-1 font-semibold">{title}</h2>
         <p>{description}</p>
-        {inStock ? <p className="currency">{price}</p> : <p>Out of stock</p>}
+        {inStock ? (
+          <p className="currency">{priceString}</p>
+        ) : (
+          <p>Out of stock</p>
+        )}
       </article>
     </Link>
   );

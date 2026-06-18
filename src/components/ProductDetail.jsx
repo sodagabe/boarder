@@ -31,7 +31,7 @@ function ProductDetail({ product, category, handler, countState, isInCart }) {
             Ages <span className="font-semibold">{product.min_age} and up</span>
           </p>
         </div>
-        <p className="currency text-2xl font-bold">{product.price}</p>
+        <p className="currency text-2xl font-bold">{product.priceString}</p>
         {product.inStock ? (
           isInCart ? (
             <div className="flex w-fit items-center gap-2 rounded-sm px-4 py-3 font-semibold text-green-500 outline-2 outline-green-500">
