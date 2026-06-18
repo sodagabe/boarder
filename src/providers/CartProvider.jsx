@@ -31,6 +31,20 @@ function CartProvider({ children }) {
     return cartArray;
   }
 
+  function getLineItems() {
+    let lineItems = [];
+    cartArray.forEach((item) => {
+      const lineItem = {
+        id: item.id,
+        qty: item.qty,
+        price: item.price,
+        subtotal: item.subtotal,
+      };
+      lineItems.push(lineItem);
+    });
+    return lineItems;
+  }
+
   function getCartQty() {
     return Object.keys(cart).length;
   }
@@ -91,6 +105,7 @@ function CartProvider({ children }) {
     <CartContext
       value={{
         getCartItems,
+        getLineItems,
         addToCart,
         getCartQty,
         getItemsSubtotal,

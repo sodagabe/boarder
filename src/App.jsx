@@ -7,6 +7,7 @@ import CartProvider from "./providers/CartProvider";
 import CartContainer from "./components/CartContainer";
 import Checkout from "./components/Checkout";
 import FocusLayout from "./components/layouts/FocusLayout";
+import OrderConfirmation from "./components/OrderConfirmation";
 
 function App() {
   return (
@@ -27,6 +28,10 @@ function App() {
           </Route>
           <Route element={<FocusLayout />}>
             <Route path="/checkout" element={<Checkout />} />
+            <Route
+              path="/order-confirmed/:orderID"
+              element={<OrderConfirmation />}
+            />
           </Route>
         </Routes>
       </CheckoutProvider>
