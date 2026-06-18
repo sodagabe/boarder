@@ -1,3 +1,5 @@
+import { toCurrency } from "../utils/math";
+
 class Product {
   #id;
   #title;
@@ -13,6 +15,10 @@ class Product {
     this.#thumbnailURL = thumbnailURL;
     this.#price = price;
     this.#categoryID = categoryID;
+  }
+
+  static formatMonetaryValue(amount) {
+    return Number(toCurrency(amount));
   }
 
   get id() {
@@ -32,7 +38,12 @@ class Product {
   }
 
   get price() {
-    return this.#price;
+    const amount = this.#price;
+    return Product.formatMonetaryValue(amount);
+  }
+
+  get priceString() {
+    return toCurrency(this.price);
   }
 
   get categoryID() {

@@ -5,9 +5,11 @@ import useLocalStorage from "../hooks/useLocalStorage";
 
 function parseSavedItems(savedObject) {
   let cartItems = {};
-  for (const [key, item] of Object.entries(savedObject)) {
-    const cartItem = new CartItem({ product: item, qty: item.qty });
-    cartItems[key] = cartItem;
+  if (savedObject) {
+    for (const [key, item] of Object.entries(savedObject)) {
+      const cartItem = new CartItem({ product: item, qty: item.qty });
+      cartItems[key] = cartItem;
+    }
   }
   return cartItems;
 }
@@ -16,19 +18,23 @@ function CartProvider({ children }) {
   const [cart, setCart] = useLocalStorage("cart", {}, parseSavedItems);
   const cartArray = Object.values(cart);
 
-  function addToCart(product) {
+  function addToCart(product, qty = 1) {
     const id = product.id;
     const updatedCart = { ...cart };
     if (Object.hasOwn(cart, id)) {
-      updatedCart[id].qty++;
+      updatedCart[id].qty += qty;
     } else {
-      updatedCart[id] = new CartItem({ product });
+      updatedCart[id] = new CartItem({ product, qty });
     }
     setCart(updatedCart);
   }
 
   function getCartItems() {
     return cartArray;
+  }
+
+  function isInCart(product) {
+    return Object.hasOwn(cart, product.id);
   }
 
   function getLineItems() {
@@ -77,10 +83,10 @@ function CartProvider({ children }) {
   }
 
   function getTotalBreakdown() {
-    const itemsSubtotal = Number(getItemsSubtotal());
-    const tax = Number(getTax(itemsSubtotal));
-    const shipping = Number(getShippingFee());
-    const total = toCurrency(itemsSubtotal + tax + shipping);
+    const itemsSubtotal = getItemsSubtotal();
+    const tax = getTax(itemsSubtotal);
+    const shipping = getShippingFee();
+    const total = toCurrency(Number(itemsSubtotal) + Number(tax) + Number());
     const breakdown = {
       itemsSubtotal,
       tax,
@@ -107,6 +113,7 @@ function CartProvider({ children }) {
         getCartItems,
         getLineItems,
         addToCart,
+        isInCart,
         getCartQty,
         getItemsSubtotal,
         getShippingFee,

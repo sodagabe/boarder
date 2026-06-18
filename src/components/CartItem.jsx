@@ -9,7 +9,7 @@ function CartItem({ item, removeHandler }) {
         <p>
           {item.qty} unit{item.multiple && "s"}
         </p>
-        <p className="currency">{item.subtotal}</p>
+        <p className="currency">{item.subtotalString}</p>
         <div className="flex grow items-end">
           <GhostButton label="Remove" handler={removeHandler} />
         </div>

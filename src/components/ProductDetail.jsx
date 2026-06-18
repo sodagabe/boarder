@@ -1,6 +1,9 @@
+import { Check } from "lucide-react";
 import Button from "./Button";
+import ItemCount from "./ItemCount";
 
-function ProductDetail({ product, category, handler }) {
+function ProductDetail({ product, category, handler, countState, isInCart }) {
+  const [count, setCount] = countState;
   return (
     <section className="flex h-max grow flex-col sm:flex-row">
       <img
@@ -28,8 +31,27 @@ function ProductDetail({ product, category, handler }) {
             Ages <span className="font-semibold">{product.min_age} and up</span>
           </p>
         </div>
-        <p className="currency text-2xl font-bold">{product.price}</p>
-        <Button label="Add to cart" handler={handler} />
+        <p className="currency text-2xl font-bold">{product.priceString}</p>
+        {product.inStock ? (
+          isInCart ? (
+            <div className="flex w-fit items-center gap-2 rounded-sm px-4 py-3 font-semibold text-green-500 outline-2 outline-green-500">
+              <Check />
+              <p>Already in cart</p>
+            </div>
+          ) : (
+            <>
+              <p>
+                <span className="font-semibold">{product.stock}</span> in stock
+              </p>
+              <ItemCount countState={[count, setCount]} stock={product.stock} />
+              <Button label={() => `Add ${count} to cart`} handler={handler} />
+            </>
+          )
+        ) : (
+          <p className="w-fit rounded-sm px-4 py-3 font-semibold text-neutral-500 outline-2 outline-neutral-500">
+            Out of stock
+          </p>
+        )}
       </div>
     </section>
   );

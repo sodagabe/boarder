@@ -7,7 +7,7 @@ import useCart from "../hooks/useCart";
 function CheckoutProvider({ children }) {
   const navigate = useNavigate();
   const formName = "checkoutForm";
-  const { getLineItems, getTotal } = useCart();
+  const { getLineItems, getTotalBreakdown } = useCart();
 
   async function submitFunction(event) {
     event.preventDefault();
@@ -23,7 +23,7 @@ function CheckoutProvider({ children }) {
     }
     order.customer = customer;
     order.items = getLineItems();
-    order.total = getTotal();
+    order.cost = getTotalBreakdown();
     order.createdOn = serverTimestamp();
     const docRef = FirestoreAPI.getNewDocRef({
       collectionName: "orders",
